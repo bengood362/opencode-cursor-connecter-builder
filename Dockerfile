@@ -47,6 +47,7 @@ jq -s '"'"'\n\
     provider: merge_field("provider"),\n\
     permission: merge_field("permission"),\n\
     plugin: merge_field("plugin")\n\
+    lsp: merge_field("lsp")\n\
   }\n\
 '"'"' -s .config/opencode/opencode.json /root/.config/opencode/opencode.json > /root/.config/opencode/opencode.json' > /usr/local/bin/merge-config.sh && \
 chmod +x /usr/local/bin/merge-config.sh
