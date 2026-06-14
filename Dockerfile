@@ -1,8 +1,10 @@
 ARG TAG=1.1.48-oe2403lts
 ARG OC_VERSION=v2.4.6
+ARG UA_VERSION=v2.7.3
 FROM openeuler/opencode:$TAG
 
 ARG OC_VERSION
+ARG UA_VERSION
 # Install bun
 RUN curl -fsSL https://bun.com/install | bash && echo 'export PATH="$HOME/.local/bin:$PATH"' >> ~/.bash_profile
 
@@ -11,6 +13,7 @@ RUN curl -fsSL https://cursor.com/install | bash
 
 # Install opencode-cursor script
 RUN curl -fsSL https://raw.githubusercontent.com/Nomadcxx/opencode-cursor/refs/tags/${OC_VERSION}/install.sh | bash
+RUN curl -fsSL https://raw.githubusercontent.com/Egonex-AI/Understand-Anything/refs/tags/${UA_VERSION}/install.sh | bash -s opencode
 
 # Utilities
 RUN dnf clean all && dnf makecache && dnf install jq -y
@@ -53,6 +56,7 @@ RUN printf '#!/bin/bash\n\
 set -e\n\
 source ~/.bash_profile\n\
 cursor-agent login\n\
+cp /root/.config/opencode/opencode.json /root/.config/opencode/opencode.json.bak \n\
 /usr/local/bin/merge-config.sh\n\
 open-cursor sync-models\n\
 cp -r ~/.cursor /workspace/.cursor\n\
